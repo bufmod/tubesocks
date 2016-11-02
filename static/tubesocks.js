@@ -1,4 +1,4 @@
-connection = new WebSocket("ws://192.168.1.130/ws");
+connection = new WebSocket("ws://127.0.0.1/ws");
 connection.onopen = function () {
     console.log("Websocket connected...");
     connection.send("init");
