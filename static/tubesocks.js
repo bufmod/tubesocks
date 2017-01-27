@@ -1,4 +1,6 @@
-connection = new WebSocket("ws://127.0.0.1/ws");
+var baseUrl = window.location.href;
+var socketUrl = "ws://" + baseUrl.split('//')[1] + "ws";
+connection = new WebSocket(socketUrl);
 connection.onopen = function () {
     console.log("Websocket connected...");
     connection.send("init");
@@ -22,13 +24,13 @@ webix.ui({container: "content",
         ]}
     ]
 });
-$$("slider1").attachEvent("onItemClick", function(id, e){
+$$("slider1").attachEvent("onItemClick", function(id){
     send_message(id, this.getValue(), connection);
 });
 $$("slider1").attachEvent("onSliderDrag", function(){
     send_message(this.config.id, this.getValue(), connection);
 });
-$$("slider2").attachEvent("onItemClick", function(id, e){
+$$("slider2").attachEvent("onItemClick", function(id){
     send_message(id, this.getValue(), connection);
 });
 $$("slider2").attachEvent("onSliderDrag", function(){
