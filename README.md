@@ -1,12 +1,17 @@
 # tubesocks
 
-Cherrypy, ws4py, webix playground: Web-app control/input 
-synchronization:
+##Websocket examples using cherrypy, ws4py, and webix:
 
-This is a simple example, using websockets implemented through ws4py and 
-cherrypy, to demonstrate slider and text input synchronization across 
-multiple connected clients.
+This repository contains various examples of websocket implementations using cherrypy and ws4py.  The static content has
+been mostly constructed with Webix and javascript / jquery.
  
-It was written in python 3.5 and requires install of cherrypy and 
-ws4py.
+The examples have only been tested in python 3.5 and Windows 7.
 
+###Examples:
+1. sync:
+
+Open several browsers pointed to http://127.0.0.1.  Changes made in one session are updated in all others.
+
+2.  system_monitor:
+
+Open browser to http://127.0.0.1 and see system performance values.  Also requires pyspectator and run as admin.
