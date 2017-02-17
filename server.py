@@ -5,11 +5,6 @@ import cherrypy
 from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
 
-cherrypy.config.update({'server.socket_host': '127.0.0.1',
-                        'server.socket_port': 80})
-WebSocketPlugin(cherrypy.engine).subscribe()
-cherrypy.tools.websocket = WebSocketTool()
-
 CLIENTS = set()
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 HTML_CONTROLS = dict(
@@ -41,15 +36,29 @@ class Synchronize(WebSocket):
 
 
 class Root(object):
-    def index(self):
-        pass
-    index.exposed = True
-
     def ws(self):
         pass
     ws.exposed = True
 
-cherrypy.quickstart(Root(), '/',
-                    config={'/ws': {'tools.websocket.on': True, 'tools.websocket.handler_cls': Synchronize},
-                            '/': {'tools.staticdir.root': CURRENT_DIR, 'tools.staticdir.on': True,
-                                  'tools.staticdir.dir': 'static', 'tools.staticdir.index': 'index.html'}})
+WebSocketPlugin(cherrypy.engine).subscribe()
+cherrypy.tools.websocket = WebSocketTool()
+cherrypy.quickstart(
+    root=Root(),
+    script_name='/',
+    config={
+        'global': {
+            'server.socket_host': '127.0.0.1',
+            'server.socket_port': 80
+        },
+        '/': {
+            'tools.staticdir.root': CURRENT_DIR,
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': 'static',
+            'tools.staticdir.index': 'index.html'
+        },
+        '/ws': {
+            'tools.websocket.on': True,
+            'tools.websocket.handler_cls': Synchronize
+        },
+    }
+)
