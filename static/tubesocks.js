@@ -36,9 +36,9 @@ $$("slider2").attachEvent("onItemClick", function(id){
 $$("slider2").attachEvent("onSliderDrag", function(){
     send_message(this.config.id, this.getValue(), connection);
 });
-$$("text1").attachEvent("onChange", function(data){
-   send_message(this.config.id, data, connection) ;
-});
+webix.event($$("text1").getNode(), "input", function(){
+    send_message(this.config.id, this.getValue(), connection)
+}, {bind:$$("text1")});
 
 function send_message(id, data, connection) {
     var message = {
